@@ -91,7 +91,7 @@ namespace ArchipelagoDiscord
 						stringBuilder.Append($"*{part.Text}*");
 						break;
 					default:
-						if( receiverPref == null && part.Text == "found their" && this.UserPreferences.ContainsKey(sender) )
+						if( receiverPref == null && part.Text.Contains("found") && this.UserPreferences.ContainsKey(sender) )
 							receiverPref = this.UserPreferences[sender];
 
 						stringBuilder.Append(part.Text);
