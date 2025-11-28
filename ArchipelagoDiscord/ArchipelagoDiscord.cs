@@ -85,12 +85,15 @@ namespace ArchipelagoDiscord
 						stringBuilder.Append($"`{part.Text}`");
 						break;
 					case MessagePartType.Item:
-						stringBuilder.Append($"__{part.Text}__");
+						stringBuilder.Append($"**{part.Text}**");
 						break;
 					case MessagePartType.Location:
 						stringBuilder.Append($"*{part.Text}*");
 						break;
 					default:
+						if( receiverPref == null && part.Text == "found their" && this.UserPreferences.ContainsKey(sender) )
+							receiverPref = this.UserPreferences[sender];
+
 						stringBuilder.Append(part.Text);
 						break;
 				}
@@ -115,13 +118,13 @@ namespace ArchipelagoDiscord
 			string userKey = item.ItemGame;
 			NotifyItemReceived(userKey, item.ItemGame, item.ItemName, item.Player.Name).Wait();
 		}
-	
+
 		private async Task NotifyItemReceived(string userKey, string game, string item, string fromuser)
 		{
 			UInt64 userid = 0;
 			if( this.UserIDs.ContainsKey(userKey) )
 				userid = this.UserIDs[userKey];
-	
+
 			string message = (userid == 0 ? "Everyone" : $"<@{userid}>") + $" ({game}) received {item} from {fromuser}";
 			await SendWebhook(message);
 		}*/
